@@ -1,0 +1,95 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<!-- Fullscreen Landing Section -->
+<section class="landing" id="home">
+    <div class="landing-content">
+        <h1>Welcome to SK Beauty Salon</h1>
+        <p>Where beauty meets elegance</p>
+        <!-- Social Media Icons -->
+        <div class="social-icons mt-4">
+            <a href="https://facebook.com" target="_blank" class="me-3"><i class="fab fa-facebook fa-2x"></i></a>
+            <a href="https://instagram.com" target="_blank" class="me-3"><i class="fab fa-instagram fa-2x"></i></a>
+            <a href="https://twitter.com" target="_blank" class="me-3"><i class="fab fa-twitter fa-2x"></i></a>
+            <a href="https://wa.me/1234567890" target="_blank"><i class="fab fa-whatsapp fa-2x"></i></a>
+        </div>
+    </div>
+</section>
+
+<!-- About Us Section -->
+<section id="about" class="py-5 bg-light">
+    <div class="container text-center">
+        <h2 class="mb-4">About Us</h2>
+        <p class="lead">
+            Welcome to our <strong>SK Hair Salon</strong> in the heart of Cape Town, where beauty, care, and confidence come together. We believe that looking good should go hand in hand with feeling good, which is why our focus is on more than just hair — it’s about your overall experience.<br />
+
+            From precision cuts and vibrant colour to nourishing treatments and relaxing head massages, we take the time to understand your unique needs and bring out your natural beauty. Our team combines skill with a personal touch, creating an atmosphere where you can truly unwind and leave feeling refreshed and renewed.<br />
+
+            We use carefully selected products that are gentle, effective, and suited to South African hair and lifestyle needs. Whether you’re preparing for a special occasion, refreshing your everyday look, or simply taking some well-deserved time for yourself, our salon is your space to relax and shine.<br />
+
+            At the heart of everything we do is a simple belief: when you feel good inside and out, your beauty shines effortlessly. We can’t wait to welcome you and share this journey with you.
+        </p>
+    </div>
+</section>
+
+<!-- Pricing Section -->
+<section id="pricing" class="py-5">
+    <div class="container-fluid text-center text-white">
+        <h2 class="mb-5">Pricing</h2>
+        <div class="row justify-content-center">
+            <div class="col-md-4 col-sm-6 mb-4">
+                <div class="card pricing-card text-center mx-auto">
+                    <div class="card-body">
+                        <h5 class="card-title">Basic Package</h5>
+                        <p class="card-text">Hair wash, Cut & Blow-dry</p>
+                        <h4>R250</h4>
+                        <a asp-action="Index" asp-controller="Booking" class="btn btn-outline-light mt-3">Book Now</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-6 mb-4">
+                <div class="card pricing-card text-center mx-auto">
+                    <div class="card-body">
+                        <h5 class="card-title">Premium Package</h5>
+                        <p class="card-text">Facial, Manicure & Pedicure</p>
+                        <h4>R550</h4>
+                        <a asp-action="Index" asp-controller="Booking" class="btn btn-outline-light mt-3">Book Now</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-6 mb-4">
+                <div class="card pricing-card text-center mx-auto">
+                    <div class="card-body">
+                        <h5 class="card-title">Luxury Package</h5>
+                        <p class="card-text">Full Makeover + Spa Treatment</p>
+                        <h4>R1200</h4>
+                        <a asp-action="Index" asp-controller="Booking" class="btn btn-outline-light mt-3">Book Now</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- Contact Section -->
+<section id="contact" class="py-5 bg-light">
+    <div class="container text-center">
+        <h2 class="mb-4">Contact Us</h2>
+        <p class="lead">We’d love to hear from you! Get in touch for bookings or inquiries.</p>
+        <form class="mt-4" style="max-width:600px; margin:auto;">
+            <div class="mb-3">
+                <input type="text" class="form-control" placeholder="Your Name" required>
+            </div>
+            <div class="mb-3">
+                <input type="email" class="form-control" placeholder="Your Email" required>
+            </div>
+            <div class="mb-3">
+                <textarea class="form-control" rows="5" placeholder="Your Message" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-dark">Send Message</button>
+        </form>
+    </div>
+</section>
+

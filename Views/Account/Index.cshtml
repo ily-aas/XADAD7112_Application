@@ -1,0 +1,39 @@
+﻿@{
+    ViewData["Title"] = "Login";
+}
+
+<div class="container-fluid vh-100">
+    <div class="row h-100">
+        <!-- Left side: Image -->
+        <div class="col-md-6 d-none d-md-block p-0">
+            <div class="login-image h-100 w-100"></div>
+        </div>
+
+        <!-- Right side: Login form -->
+        <div class="col-12 col-md-6 d-flex align-items-center justify-content-center">
+            <div class="login-form w-75">
+                <h2 class="mb-4 text-center">Login to Your Account</h2>
+
+                <form method="post" asp-action="Login" asp-controller="Account">
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email address</label>
+                        <input type="email" class="form-control" id="email" name="Email" placeholder="Enter email" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Password</label>
+                        <input type="password" class="form-control" id="password" name="Password" placeholder="Password" required>
+                    </div>
+                    <div class="mb-3 form-check">
+                        <input type="checkbox" class="form-check-input" id="rememberMe" name="RememberMe">
+                        <label class="form-check-label" for="rememberMe">Remember me</label>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">Login</button>
+                    <p class="mt-3 text-center">
+                        Don't have an account? <a href="/Account/Register">Register</a>
+                    </p>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
