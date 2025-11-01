@@ -185,7 +185,9 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-dark fixed-top">
+        @if (ViewBag.HideNavbar != true)
+        {
+             <nav class="navbar navbar-expand-sm navbar-dark fixed-top">
             <div class="container-fluid">
                 <a class="navbar-brand" asp-action="Index" asp-controller="Home"><strong>SK Beauty Salon</strong></a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse"
@@ -200,7 +202,7 @@
                         <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>                  
                         <li class="nav-item"><a class="nav-link" asp-action="Index" asp-controller="Booking">Book</a></li>
                         <li class="nav-item">
-                            <a class="nav-link" asp-action="Index" asp-controller="Account">
+                            <a class="nav-link" asp-action="Login" asp-controller="Account">
                                 <i class="fa-solid fa-user" style="font-size: 1.0rem;"></i>
                             </a>
                         </li>
@@ -208,6 +210,8 @@
                 </div>
             </div>
         </nav>
+        }
+       
     </header>
     <div>
         <main role="main">

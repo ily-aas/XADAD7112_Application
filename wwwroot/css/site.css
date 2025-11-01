@@ -52,6 +52,13 @@ body {
     height: 100%;
 }
 
+.create-image {
+    background-image: url('../images/farhad-ibrahimzade-V2HDOQTJh3o-unsplash.jpg'); /* replace with your image URL */
+    background-size: cover;
+    background-position: center;
+    height: 100%;
+}
+
 /* Login form styling */
 .login-form {
     max-width: 400px;

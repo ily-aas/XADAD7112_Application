@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using static XADAD7112_Application.Models.System.Enums;
 
 namespace XADAD7112_Application.Models
 {
@@ -27,7 +28,7 @@ namespace XADAD7112_Application.Models
         public string? Address { get; set; }
 
         [Required]
-        public int UserRole { get; set; }
+        public int UserRole { get; set; } = 0;
 
         public DateTime? DateCreated { get; set; }
 
@@ -39,4 +40,5 @@ namespace XADAD7112_Application.Models
 
         //public ICollection<Product>? Products { get; set; }
     }
+
 }

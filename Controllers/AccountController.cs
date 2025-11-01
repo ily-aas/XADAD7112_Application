@@ -2,6 +2,10 @@
 using APDS_POE.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using XADAD7112_Application.Models;
+using XADAD7112_Application.Models.Account;
+using static XADAD7112_Application.Models.Account.Dtos;
 using static XADAD7112_Application.Models.System.Enums;
 
 namespace APDS_POE.Controllers
@@ -19,9 +23,23 @@ namespace APDS_POE.Controllers
         }
 
         [AllowAnonymous]
-        public IActionResult Index()
+        public IActionResult Login()
         {
             return View();
+        }
+
+        [AllowAnonymous]
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+
+        [HttpPost]
+        [AllowAnonymous]
+        public IActionResult LoginAccount(AccountLoginDto Dto)
+        {
+            return Ok();
         }
 
         [HttpPost]
@@ -68,5 +86,45 @@ namespace APDS_POE.Controllers
             Response.Cookies.Delete("jwt_token");
             return RedirectToAction("Index", "Home");
         }
+
+
+        [HttpPost]
+        [AllowAnonymous]
+        public IActionResult CreateAccount(AccountCreateDto dto)
+        {
+
+            if (!ModelState.IsValid)
+            {
+                ViewBag.Error = "Invalid Form Submission";
+                return View();
+            }
+
+            var response = Repo.AddUser(dto);
+
+            if (response.IsSuccess)
+            {
+                return View("Login");
+            }
+
+            ViewBag.Error = response.Message;
+            return View();
+        }
+
+
+        [HttpPost]
+        public IActionResult UpdateAccount(AccountUpdateDto dto)
+        {
+            var response = Repo.UpdateUser(dto.user);
+            return Ok(response);
+        }
+
+        [HttpPost]
+        public IActionResult DeleteAccount(AccountDeleteDto dto)
+        {
+            var response = Repo.DeleteUser(dto.Id);
+            return Ok(response);
+        }
+
+
     }
 }

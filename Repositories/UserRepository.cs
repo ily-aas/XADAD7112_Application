@@ -6,6 +6,7 @@ using static XADAD7112_Application.Models.System.Enums;
 using XADAD7112_Application.Services;
 
 
+
 namespace APDS_POE.Repositories
 {
 
@@ -13,6 +14,8 @@ namespace APDS_POE.Repositories
     {
         public User? Login(string Username, string Password, bool IsAdmin = false);
         public AppResponse AddUser(User user);
+        public AppResponse UpdateUser(User user);
+        public AppResponse DeleteUser(int id);
         public List<User> GetAllUsers();
         public User? GetUser(int ID);
     }
@@ -77,7 +80,7 @@ namespace APDS_POE.Repositories
             try
             {
                 user.DateCreated = DateTime.Now;
-
+                user.Password = Helper.PasswordService.Encrypt(user.Password);
                 DB.User.Add(user);
                 DB.SaveChanges();
 
@@ -92,5 +95,76 @@ namespace APDS_POE.Repositories
                 return response;
             }
         }
+
+        public AppResponse UpdateUser(User user)
+        {
+            AppResponse response = new AppResponse();
+
+            try
+            {
+                var existingUser = DB.User.FirstOrDefault(x => x.Id == user.Id);
+
+                if (existingUser == null)
+                {
+                    response.IsSuccess = false;
+                    response.Message = "User not found.";
+                    return response;
+                }
+
+                // Update fields
+                existingUser.FullName = user.FullName;
+                existingUser.Username = user.Username;
+                existingUser.Password = user.Password;
+                existingUser.MobileNo = user.MobileNo;
+                existingUser.Email = user.Email;
+                existingUser.Address = user.Address;
+                existingUser.UserRole = user.UserRole;
+                // Do NOT update DateCreated — that's historical data
+
+                DB.SaveChanges();
+
+                response.IsSuccess = true;
+                response.Message = "User updated successfully.";
+                return response;
+            }
+            catch (Exception ex)
+            {
+                response.IsSuccess = false;
+                response.Message = $"Error updating user: {ex.Message}";
+                return response;
+            }
+        }
+
+        public AppResponse DeleteUser(int id)
+        {
+            AppResponse response = new AppResponse();
+
+            try
+            {
+                var user = DB.User.FirstOrDefault(x => x.Id == id);
+
+                if (user == null)
+                {
+                    response.IsSuccess = false;
+                    response.Message = "User not found.";
+                    return response;
+                }
+
+                DB.User.Remove(user);
+                DB.SaveChanges();
+
+                response.IsSuccess = true;
+                response.Message = "User deleted successfully.";
+                return response;
+            }
+            catch (Exception ex)
+            {
+                response.IsSuccess = false;
+                response.Message = $"Error deleting user: {ex.Message}";
+                return response;
+            }
+        }
+
+
     }
 }

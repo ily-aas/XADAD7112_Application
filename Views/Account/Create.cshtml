@@ -1,0 +1,64 @@
+﻿@{
+    ViewData["Title"] = "Create Account";
+    ViewBag.HideNavbar = true;
+
+}
+
+@if (ViewBag.Error != null)
+{
+    <div class="alert alert-danger">
+        @ViewBag.Error
+    </div>
+}
+
+<div class="container-fluid vh-100">
+    <div class="row h-100">
+        <!-- Left side: Image -->
+        <div class="col-md-6 d-none d-md-block p-0">
+            <div class="create-image h-100 w-100"></div>
+        </div>
+
+        <!-- Right side: Login form -->
+        <div class="col-12 col-md-6 d-flex align-items-center justify-content-center">
+            <div class="login-form w-75">
+                <h2 class="mb-4 text-center">Create Your Account</h2>
+
+                <form method="post" asp-action="CreateAccount" asp-controller="Account">
+                    <div class="mb-3">
+                        <label for="fullname" class="form-label">Name & Surname</label>
+                        <input type="text" class="form-control" id="fullname" name="FullName" placeholder="Name & Surname..." required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email address</label>
+                        <input type="email" class="form-control" id="email" name="Email" placeholder="Email..." required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="mobile" class="form-label">Mobile Number</label>
+                        <input type="number" class="form-control" id="mobile" name="MobileNo" placeholder="Mobile Number..." required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="address" class="form-label">Address</label>
+                        <input type="text" class="form-control" id="address" name="Address" placeholder="Address..." required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="username" class="form-label">Username</label>
+                        <input type="text" class="form-control" id="username" name="Username" placeholder="Username..." required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Password</label>
+                        <input type="password" class="form-control" id="password" name="Password" placeholder="Password..." required>
+                    </div>
+                    <div class="mb-3 form-check">
+                        <input type="checkbox" class="form-check-input" id="rememberMe" name="RememberMe">
+                        <label class="form-check-label" for="rememberMe">Remember me</label>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">Create</button>
+                    <p class="mt-3 text-center">
+                        Already have an account? <a href="/Account/Login">Login</a>
+                    </p>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
