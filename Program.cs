@@ -1,6 +1,7 @@
 using APDS_POE.Repositories;
 using APDS_POE.Services;
 using Microsoft.EntityFrameworkCore;
+using XADAD7112_Application.Repositories;
 using XADAD7112_Application.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -37,6 +38,8 @@ builder.Services.AddAuthorization();
 
 //Repos
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IBookingRepository, BookingRepository>();
+builder.Services.AddScoped<IHelperService, Helper>();
 
 var app = builder.Build();
 

@@ -2,13 +2,7 @@
 {
     public class Cart
     {
-        public class CartModel
-        {
-            public Dictionary<string, CartItem> Items { get; set; }
-            public decimal Total { get; set; }
-        }
-
-        public class CartItem
+        public class BookingItem
         {
             public string Name { get; set; }
             public decimal Price { get; set; }
@@ -17,8 +11,10 @@
 
         public class BookingRequest
         {
-            public List<CartItem> Items { get; set; }
+            public List<BookingItem> Items { get; set; }
             public decimal Total { get; set; }
+            public TimeSpan AppointmentTime { get; set; }
+            public DateTime AppointmentDate { get; set; }
         }
     }
 }

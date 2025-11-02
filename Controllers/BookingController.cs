@@ -1,12 +1,21 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using XADAD7112_Application.Models.Booking;
+using XADAD7112_Application.Repositories;
 using static XADAD7112_Application.Models.Booking.Cart;
 
 namespace XADAD7112_Application.Controllers
 {
     public class BookingController : Controller
     {
+
+        private readonly IBookingRepository repo;
+
+        public BookingController(IBookingRepository bookingRepository)
+        {
+            repo = bookingRepository;
+        }
+
         [AllowAnonymous]
         public IActionResult Index()
         {
@@ -14,14 +23,29 @@ namespace XADAD7112_Application.Controllers
         }
 
         [HttpPost]
-        public IActionResult SubmitBooking(BookingRequest model)
+        [AllowAnonymous]
+        public IActionResult SubmitBooking(BookingRequest request)
         {
-            if (!ModelState.IsValid || model.Items.Count == 0)
-                return View("BookYourAppointment");
+            if (request.Items == null || request.Items.Count == 0)
+            {
+                ViewBag.Error = "Your cart is empty!";
+                return View("Book");
+            }
 
-            // Model.Items and Model.Total are successfully bound here ✅
+            var response = repo.CreateBookingAsync(request);
 
-            return RedirectToAction("Confirm");
+            if (response.Result.IsSuccess)
+            {
+                ViewBag.Success = "Booking successful!";
+                return View("Index");
+            }
+            else
+            {
+                ViewBag.Success = "An error occurred while capturing the booking!";
+                return View("Index");
+            }
+
+                
         }
 
     }

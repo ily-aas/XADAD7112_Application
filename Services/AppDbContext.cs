@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Reflection.Emit;
+using XADAD7112_Application.Models.Booking;
 
 namespace XADAD7112_Application.Services
 {
@@ -11,12 +12,17 @@ namespace XADAD7112_Application.Services
         public AppDbContext(DbContextOptions<AppDbContext> options): base(options){}
 
         public DbSet<User> User { get; set; }
+        public DbSet<Booking> Booking { get; set; }
+        public DbSet<BookingItem> BookingItem { get; set; }
+        
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<User>().ToTable("User").HasKey(x => x.Id);
+            modelBuilder.Entity<Booking>().ToTable("Booking").HasKey(x => x.Id);
+            modelBuilder.Entity<BookingItem>().ToTable("BookingItems").HasKey(x => x.Id);
 
         }
     }
