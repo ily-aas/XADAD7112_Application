@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.Security.Claims;
 using XADAD7112_Application.Models;
 using XADAD7112_Application.Models.Account;
+using XADAD7112_Application.Services;
 using static XADAD7112_Application.Models.Account.Dtos;
 using static XADAD7112_Application.Models.System.Enums;
 
@@ -17,11 +18,13 @@ namespace APDS_POE.Controllers
 
         private readonly IUserRepository Repo;
         private readonly JwtAuthentication _auth;
+        private readonly ILoggingService _logger;
 
-        public AccountController(IUserRepository userRepository, JwtAuthentication jwtAuthentication)
+        public AccountController(IUserRepository userRepository, JwtAuthentication jwtAuthentication, ILoggingService loggingService)
         {
             Repo = userRepository;
             _auth = jwtAuthentication;
+            _logger = loggingService;
         }
 
         [AllowAnonymous]
@@ -87,6 +90,8 @@ namespace APDS_POE.Controllers
                 ExpiresUtc = DateTime.UtcNow.AddHours(1)
             });
 
+            await _logger.LogAsync("Accoount", $"User '{user.Username}' logged in");
+
             return RedirectToAction("Index", "Booking");
         }
 
@@ -118,6 +123,7 @@ namespace APDS_POE.Controllers
             }
 
             ViewBag.Error = response.Message;
+            _logger.LogAsync("Accoount", $"{dto.Username} created an account");
             return View("Create");
         }
 

@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using XADAD7112_Application.Models;
 using XADAD7112_Application.Models.Booking;
 using XADAD7112_Application.Repositories;
+using XADAD7112_Application.Services;
 using static XADAD7112_Application.Models.Booking.Cart;
 
 namespace XADAD7112_Application.Controllers
