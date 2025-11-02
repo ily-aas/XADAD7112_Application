@@ -1,0 +1,335 @@
+﻿@model XADAD7112_Application.Models.Admin.AdminDashboardViewModel
+
+<div id="globalAlert"
+     class="alert alert-danger text-center"
+     style="display:none;"
+     role="alert">
+    @* Render server-side if there is a message *@
+    @if (ViewBag.Error != null)
+    {
+        @Html.Raw(ViewBag.Error)
+    }
+    @if (ViewBag.Success != null)
+    {
+        @Html.Raw(ViewBag.Success)
+    }
+</div>
+
+<div class="container mt-5">
+    <h1 class="mb-4 mt-5 pt-5">Admin Dashboard</h1>
+
+    <!-- Bookings -->
+    <div class="card mb-4">
+        <div class="card-header">
+            <h2 class="mb-0">Bookings</h2>
+        </div>
+        <div class="card-body p-0">
+            <table class="table table-striped mb-0" id="bookingsTable">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Booking ID</th>
+                        <th>Time</th>
+                        <th>Date</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var booking in Model.Bookings)
+                    {
+                        <tr data-booking-id="@booking.Id">
+                            <td>@booking.Id</td>
+                            <td>@booking.Time</td>
+                            <td>@booking.Date.ToString("dd MMMM yyyy")</td>
+                            <td>@booking.IsCancelled</td>
+                            <td>
+                                <button class="btn btn-sm btn-primary rescheduleBtn"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#rescheduleModal"
+                                        data-booking-id="@booking.Id"
+                                        data-booking-date="@booking.Date.ToString("yyyy-MM-dd")"
+                                        data-booking-time="@booking.Time">
+                                    Reschedule
+                                </button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <!-- Users -->
+    <div class="card mb-4">
+        <div class="card-header">
+            <h2 class="mb-0">Users</h2>
+        </div>
+        <div class="card-body p-0">
+            <table class="table table-striped mb-0">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Username</th>
+                        <th>Email</th>
+                        <th>Mobile Number</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var user in Model.Users)
+                    {
+                        <tr data-user-id="@user.Id">
+                            <td>@user.Username</td>
+                            <td>@user.Email</td>
+                            <td>@user.MobileNo</td>
+                            <td>
+                                <button class="btn btn-sm btn-warning editUserBtn"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#editUserModal"
+                                        data-user-id="@user.Id"
+                                        data-fullname="@user.FullName"
+                                        data-username="@user.Username"
+                                        data-email="@user.Email"
+                                        data-mobileno="@user.MobileNo"
+                                        data-address="@user.Address"
+                                        data-userrole="@user.UserRole">
+                                    Edit
+                                </button>
+                                <a href="#" class="btn btn-sm btn-danger deleteUserBtn" data-user-id="@user.Id">Delete</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+
+            </table>
+        </div>
+    </div>
+
+
+    <!-- Trace Logs -->
+    <div class="card mb-4">
+        <div class="card-header">
+            <h2 class="mb-0">Trace Logs</h2>
+        </div>
+        <div class="card-body p-0">
+            <table id="traceLogsTable" class="table table-striped mb-0">
+                <thead class="table-dark">
+                    <tr>
+                        <th>ID</th>
+                        <th>Action</th>
+                        <th>Details</th>
+                        <th>Created At</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var log in Model.TraceLogs)
+                    {
+                        <tr>
+                            <td>@log.Id</td>
+                            <td>@log.Action</td>
+                            <td>@log.Details</td>
+                            <td>@log.CreatedAt.ToString("g")</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</div>
+
+    
+<!-- Reschedule Modal -->
+<div class="modal fade" id="rescheduleModal" tabindex="-1" aria-labelledby="rescheduleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form id="rescheduleForm">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="rescheduleModalLabel">Reschedule Booking</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" id="BookingId" name="BookingId" />
+
+                    <div class="mb-3">
+                        <label for="BookingDate" class="form-label">Date</label>
+                        <input type="date" class="form-control" id="BookingDate" name="BookingDate" required />
+                    </div>
+                    <div class="mb-3">
+                        <label for="BookingTime" class="form-label">Time</label>
+                        <input type="time" class="form-control" id="BookingTime" name="BookingTime" required />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Edit User Modal -->
+<div class="modal fade" id="editUserModal" tabindex="-1" aria-labelledby="editUserModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form id="editUserForm">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editUserModalLabel">Edit User Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" id="UserId" name="Id" />
+
+                    <div class="mb-3">
+                        <label for="FullName" class="form-label">Full Name</label>
+                        <input type="text" class="form-control" id="FullName" name="FullName" required />
+                    </div>
+                    <div class="mb-3">
+                        <label for="Username" class="form-label">Username</label>
+                        <input type="text" class="form-control" id="Username" name="Username" required />
+                    </div>
+                    <div class="mb-3">
+                        <label for="Email" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="Email" name="Email" />
+                    </div>
+                    <div class="mb-3">
+                        <label for="MobileNo" class="form-label">Mobile No</label>
+                        <input type="text" class="form-control" id="MobileNo" name="MobileNo" />
+                    </div>
+                    <div class="mb-3">
+                        <label for="Address" class="form-label">Address</label>
+                        <input type="text" class="form-control" id="Address" name="Address" />
+                    </div>
+                    <div class="mb-3">
+                        <label for="UserRole" class="form-label">Role</label>
+                        <select class="form-select" id="UserRole" name="UserRole">
+                            <option value="1">User</option>
+                            <option value="0">Admin</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+@section Scripts {
+    <script>
+
+            $(document).ready(function() {
+            $('#traceLogsTable').DataTable({
+                "paging": true,          // Enable pagination
+                "pageLength": 10,        // Number of rows per page
+                "lengthChange": true,    // Allow user to change rows per page
+                "searching": true,       // Enable search
+                "ordering": true,        // Enable sorting
+                "info": true,            // Show info (e.g. "Showing 1 to 10 of 50 entries")
+                "autoWidth": false
+            });
+        });
+
+        // Fill modal with data when opened
+        const rescheduleModal = document.getElementById('rescheduleModal');
+        rescheduleModal.addEventListener('show.bs.modal', event => {
+            const button = event.relatedTarget;
+            const bookingId = button.getAttribute('data-booking-id');
+            const bookingDate = button.getAttribute('data-booking-date');
+            const bookingTime = button.getAttribute('data-booking-time');
+
+            document.getElementById('BookingId').value = bookingId;
+            document.getElementById('BookingDate').value = bookingDate;
+            document.getElementById('BookingTime').value = bookingTime;
+        });
+
+        // AJAX submit
+        $('#rescheduleForm').submit(function (e) {
+            e.preventDefault();
+            var formData = $(this).serialize();
+
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("RescheduleBooking", "Admin")',
+                data: formData,
+                success: function (response) {
+                    if (response.success) {
+                        alert('Booking rescheduled successfully!');
+                        location.reload(); // Reload table
+                    } else {
+                        alert('Error: ' + response.message);
+                    }
+                },
+                error: function () {
+                    alert('An unexpected error occurred.');
+                }
+            });
+        });
+
+                // Fill modal with current user data
+        const editUserModal = document.getElementById('editUserModal');
+        editUserModal.addEventListener('show.bs.modal', event => {
+            const button = event.relatedTarget;
+            document.getElementById('UserId').value = button.getAttribute('data-user-id');
+            document.getElementById('FullName').value = button.getAttribute('data-fullname');
+            document.getElementById('Username').value = button.getAttribute('data-username');
+            document.getElementById('Email').value = button.getAttribute('data-email');
+            document.getElementById('MobileNo').value = button.getAttribute('data-mobileno');
+            document.getElementById('Address').value = button.getAttribute('data-address');
+            document.getElementById('UserRole').value = button.getAttribute('data-userrole');
+        });
+
+                $('#editUserForm').submit(function (e) {
+            e.preventDefault();
+            var formData = $(this).serialize();
+
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("UpdateUser", "Admin")',
+                data: formData,
+                success: function(response) {
+                    if(response.success) {
+                       location.reload(); // Reload table
+                    } else {
+                        alert('Error: ' + response.message);
+                    }
+                },
+                error: function() {
+                    alert('An unexpected error occurred.');
+                }
+            });
+        });
+
+                // Handle delete user
+        $(document).on('click', '.deleteUserBtn', function(e){
+            e.preventDefault();
+
+            var userId = $(this).data('user-id');
+
+            if(!confirm("Are you sure you want to delete this user?")) {
+                return;
+            }
+
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("DeleteAccount", "Account")',
+                data: { id: userId },
+                success: function(response) {
+                    if(response.success) {
+                        // Remove the row from the table
+                        $('tr[data-user-id="' + userId + '"]').remove();
+                    } else {
+                        alert('Error: ' + response.message);
+                    }
+                },
+                error: function() {
+                    alert('An unexpected error occurred.');
+                }
+            });
+        });
+
+    </script>
+}

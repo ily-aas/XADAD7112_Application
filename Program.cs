@@ -41,6 +41,7 @@ builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IBookingRepository, BookingRepository>();
 builder.Services.AddScoped<IHelperService, Helper>();
 builder.Services.AddScoped<ILoggingService, Logger>();
+builder.Services.AddScoped<IAdminRepository, AdminRepository>();
 
 
 var app = builder.Build();

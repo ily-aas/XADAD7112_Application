@@ -4,6 +4,7 @@ using static XADAD7112_Application.Models.Booking.Cart;
 using APDS_POE.Services;
 using XADAD7112_Application.Models.System;
 using XADAD7112_Application.Models.Account;
+using Microsoft.EntityFrameworkCore;
 
 namespace XADAD7112_Application.Repositories
 {
@@ -11,6 +12,8 @@ namespace XADAD7112_Application.Repositories
     public interface IBookingRepository
     {
         Task<AppResponse> CreateBookingAsync(BookingRequest request);
+        public Booking? GetBookingById(int Id);
+        public AppResponse RescheduleBooking(Booking booking);
     }
 
     public class BookingRepository : IBookingRepository
@@ -25,6 +28,40 @@ namespace XADAD7112_Application.Repositories
             _db = dbContext;
             _helpers = helpers;
             logger = loggingService;
+        }
+
+        public Booking? GetBookingById(int Id)
+        {
+            return _db.Booking.Where(x => x.Id == Id).FirstOrDefault();
+        }
+
+        public AppResponse RescheduleBooking(Booking booking)
+        {
+            try
+            {
+                _db.Booking
+                .Where(x => x.Id == booking.Id)
+                .ExecuteUpdate(b => b
+                    .SetProperty(p => p.Date, booking.Date)
+                    .SetProperty(p => p.Time, booking.Time)
+                );
+
+                _db.SaveChanges();
+
+                return new AppResponse()
+                {
+                    IsSuccess = true,
+                    Message = "Booking updated sucessfully",
+                };
+            }
+            catch (Exception ex)
+            {
+                return new AppResponse()
+                {
+                    IsSuccess = false,
+                    Message = "An error occurred while updating the booking",
+                };
+            }
         }
 
         public async Task<AppResponse> CreateBookingAsync(BookingRequest request)

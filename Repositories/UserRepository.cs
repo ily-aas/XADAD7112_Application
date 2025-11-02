@@ -37,13 +37,12 @@ namespace APDS_POE.Repositories
 
             try
             {
-                if (IsAdmin)
+
+                user = DB.User.Where(x => x.Username == Username && x.Password == Helper.PasswordService.Encrypt(Password) && (UserRole)x.UserRole == UserRole.User).FirstOrDefault();
+
+                if (user == null)
                 {
                     user = DB.User.Where(x => x.Username == Username && x.Password == Helper.PasswordService.Encrypt(Password) && (UserRole)x.UserRole == UserRole.Admin).FirstOrDefault();
-                }
-                else
-                {
-                    user = DB.User.Where(x => x.Username == Username && x.Password == Helper.PasswordService.Encrypt(Password) && (UserRole)x.UserRole == UserRole.User).FirstOrDefault();
                 }
 
                 if (user == null)

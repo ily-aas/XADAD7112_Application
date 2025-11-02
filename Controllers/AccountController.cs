@@ -60,7 +60,7 @@ namespace APDS_POE.Controllers
                 return View("Login");
             }
 
-            var user = Repo.Login(username, password, IsAdmin);
+            var user = Repo.Login(username, password);
 
             if (user == null)
             {
@@ -75,7 +75,7 @@ namespace APDS_POE.Controllers
             var claims = new List<Claim>
             {
                 new Claim(ClaimTypes.Name, user.Username),
-                new Claim(ClaimTypes.Role, (IsAdmin ? "Admin" : "User")),
+                new Claim(ClaimTypes.Role, (user.UserRole == (int)UserRole.Admin ? "Admin" : "User")),
                 new Claim(ClaimTypes.Sid, user.Id.ToString())
             };
 
@@ -90,7 +90,12 @@ namespace APDS_POE.Controllers
                 ExpiresUtc = DateTime.UtcNow.AddHours(1)
             });
 
-            await _logger.LogAsync("Accoount", $"User '{user.Username}' logged in");
+            await _logger.LogAsync("Account", $"User '{user.Username}' logged in");
+
+            if (user.UserRole == (int)UserRole.Admin)
+            {
+                return RedirectToAction("Index", "Admin");
+            }
 
             return RedirectToAction("Index", "Booking");
         }
@@ -136,10 +141,24 @@ namespace APDS_POE.Controllers
         }
 
         [HttpPost]
-        public IActionResult DeleteAccount(AccountDeleteDto dto)
+        [AllowAnonymous]
+        public IActionResult DeleteAccount(int id)
         {
-            var response = Repo.DeleteUser(dto.Id);
-            return Ok(response);
+            try
+            {
+                var user = Repo.GetUser(id);
+                if (user == null)
+                    return Json(new { success = false, message = "User not found" });
+
+                var response = Repo.DeleteUser(id);
+
+                return Json(new { success = true });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = "User not found" });
+            }
+
         }
 
 
