@@ -12,5 +12,6 @@ namespace XADAD7112_Application.Models.Admin
         public List<User>? Users { get; set; }
         public List<TraceLogs>? TraceLogs { get; set; }
         public List<Booking.Booking>? Bookings { get; set; }
+        public List<Inquiry>? Inquiries { get; set; }
     }
 }

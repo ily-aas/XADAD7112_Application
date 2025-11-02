@@ -15,7 +15,7 @@
     }
 </div>
 
-<div class="container mt-5">
+<div class="container mt-5 mb-5 pb-5">
     <h1 class="mb-4 mt-5 pt-5">Admin Dashboard</h1>
 
     <!-- Bookings -->
@@ -133,10 +133,45 @@
             </table>
         </div>
     </div>
-</div>
-</div>
+    <!-- Inquiries -->
+    <div class="card mb-4">
+        <div class="card-header">
+            <h2 class="mb-0">Inquiries</h2>
+        </div>
+        <div class="card-body p-0">
+            <table id="inquiriesTable" class="table table-striped mb-0">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var inq in Model.Inquiries)
+                    {
+                        <tr>
+                            <td>@inq.Name</td>
+                            <td>@inq.Email</td>
+                            <td>
+                                <button type="button"
+                                        class="btn btn-sm btn-primary viewInquiryBtn"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#inquiryModal"
+                                        data-inquiry-name="@inq.Name"
+                                        data-inquiry-email="@inq.Email"
+                                        data-inquiry-message="@inq.Message">
+                                    View
+                                </button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
 
-    
+</div>    
 <!-- Reschedule Modal -->
 <div class="modal fade" id="rescheduleModal" tabindex="-1" aria-labelledby="rescheduleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -215,7 +250,38 @@
         </div>
     </div>
 </div>
+<!-- Inquiry View Modal -->
+<div class="modal fade" id="inquiryModal" tabindex="-1" aria-labelledby="inquiryModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="inquiryModalLabel">Inquiry Details</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
 
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label class="form-label">Name</label>
+                    <input id="inquiryName" class="form-control" readonly />
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Email</label>
+                    <input id="inquiryEmail" class="form-control" readonly />
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Message</label>
+                    <textarea id="inquiryMessage" class="form-control" rows="5" readonly></textarea>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 @section Scripts {
@@ -230,6 +296,18 @@
                 "ordering": true,        // Enable sorting
                 "info": true,            // Show info (e.g. "Showing 1 to 10 of 50 entries")
                 "autoWidth": false
+            });
+        });
+
+             document.addEventListener("DOMContentLoaded", () => {
+            const modal = document.getElementById("inquiryModal");
+
+            modal.addEventListener("show.bs.modal", (event) => {
+                const button = event.relatedTarget;
+
+                document.getElementById("inquiryName").value = button.getAttribute("data-inquiry-name");
+                document.getElementById("inquiryEmail").value = button.getAttribute("data-inquiry-email");
+                document.getElementById("inquiryMessage").value = button.getAttribute("data-inquiry-message");
             });
         });
 

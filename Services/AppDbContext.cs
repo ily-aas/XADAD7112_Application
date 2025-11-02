@@ -16,6 +16,7 @@ namespace XADAD7112_Application.Services
         public DbSet<Booking> Booking { get; set; }
         public DbSet<BookingItem> BookingItem { get; set; }
         public DbSet<TraceLogs> Logs { get; set; }
+        public DbSet<Inquiry> Inquiries { get; set; }
         
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -26,6 +27,7 @@ namespace XADAD7112_Application.Services
             modelBuilder.Entity<Booking>().ToTable("Booking").HasKey(x => x.Id);
             modelBuilder.Entity<BookingItem>().ToTable("BookingItems").HasKey(x => x.Id);
             modelBuilder.Entity<TraceLogs>().ToTable("TraceLogs").HasKey(x => x.Id);
+            modelBuilder.Entity<Inquiry>().ToTable("Inquiry").HasKey(x => x.Id);
 
         }
     }

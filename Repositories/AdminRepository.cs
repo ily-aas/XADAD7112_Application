@@ -11,6 +11,7 @@ namespace XADAD7112_Application.Repositories
         public List<TraceLogs> ListTraceLogs();
         public List<User> ListUsers();
         public List<Booking> ListBookings();
+        public List<Inquiry> ListInquiries();
     }
 
     public class AdminRepository : IAdminRepository
@@ -36,6 +37,11 @@ namespace XADAD7112_Application.Repositories
         public List<Booking> ListBookings()
         {
             return _db.Booking.ToList();
+        }
+
+        public List<Inquiry> ListInquiries()
+        {
+            return _db.Inquiries.ToList();
         }
 
     }

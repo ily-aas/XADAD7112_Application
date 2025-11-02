@@ -31,7 +31,8 @@ namespace XADAD7112_Application.Controllers
             {
                 TraceLogs = repo.ListTraceLogs(),
                 Bookings = repo.ListBookings(),
-                Users = repo.ListUsers()
+                Users = repo.ListUsers(),
+                Inquiries = repo.ListInquiries(),
             };
 
             return View(vm);

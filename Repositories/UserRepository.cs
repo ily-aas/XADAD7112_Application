@@ -18,6 +18,7 @@ namespace APDS_POE.Repositories
         public AppResponse DeleteUser(int id);
         public List<User> GetAllUsers();
         public User? GetUser(int ID);
+        public AppResponse AddUserInquiry(Inquiry inquiry);
     }
     public class UserRepository : IUserRepository
     {
@@ -164,6 +165,34 @@ namespace APDS_POE.Repositories
             }
         }
 
+        public AppResponse AddUserInquiry(Inquiry inquiry)
+        {
+
+            try
+            {
+
+                DB.Inquiries.Add(inquiry);
+                DB.SaveChanges();
+
+                return new AppResponse()
+                {
+                    IsSuccess = true,
+                    Message = "Message captured sucessfully"
+
+                };
+
+            }
+            catch (Exception ex)
+            {
+                return new AppResponse()
+                {
+                    IsSuccess = false,
+                    Message = "An error occurred while trying to capture the message"
+
+                };
+            }
+            
+        }
 
     }
 }
