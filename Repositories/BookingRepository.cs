@@ -14,6 +14,7 @@ namespace XADAD7112_Application.Repositories
         Task<AppResponse> CreateBookingAsync(BookingRequest request);
         public Booking? GetBookingById(int Id);
         public AppResponse RescheduleBooking(Booking booking);
+        public List<SessionDto> GetSessions(DateTime date);
     }
 
     public class BookingRepository : IBookingRepository
@@ -116,6 +117,30 @@ namespace XADAD7112_Application.Repositories
                     Message = ex.Message
                 };
             }
+
+        }
+
+        public List<SessionDto> GetSessions(DateTime date) {
+
+            var allSessions = _db.Sessions
+                        .Where(s => s.SessionStart.Date == date.Date)
+                        .OrderBy(s => s.SessionStart)
+                        .ToList();
+
+            // Get all bookings for that date
+            var bookedTimes = _db.Booking
+                                .Where(b => b.Date.Date == date.Date)
+                                .Select(b => b.Time.ToString(@"hh\:mm")) // format to match session start
+                                .ToList();
+
+            // Build list of sessions with booked status
+            var result = allSessions.Select(s => new SessionDto
+            {
+                Time = s.SessionStart.ToString("HH:mm"),
+                IsBooked = bookedTimes.Contains(s.SessionStart.ToString("HH:mm"))
+            }).ToList();
+
+            return result;
 
         }
 

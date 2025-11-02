@@ -77,11 +77,10 @@
                 <label class="form-label fw-bold">Select Appointment Date</label>
                 <input type="date" id="AppointmentDate" name="AppointmentDate" class="form-control" required>
             </div>
-
             <!-- Appointment Time -->
             <div class="mt-3">
                 <label class="form-label fw-bold">Select Appointment Time</label>
-                <input type="time" id="AppointmentTime" name="AppointmentTime" class="form-control" required>
+                <input type="time" id="AppointmentTime"  min="08:00" max="19:00" name="AppointmentTime" class="form-control" required>
             </div>
 
             <input type="hidden" name="Total" id="TotalInput" />
@@ -94,31 +93,55 @@
 </div>
 
 <script>
+
+    AppointmentDate.addEventListener("change", function () {
+        if (this.value === today && AppointmentTime.value < "08:00") {
+            AppointmentTime.value = "08:00";
+        }
+    });
+
+    const timeInput = document.getElementById("AppointmentTime");
+    timeInput.addEventListener("change", function () {
+        if (this.value < "08:00") this.value = "08:00";
+        if (this.value > "19:00") this.value = "19:00";
+
+        // Round to nearest hour
+        const [h, m] = this.value.split(":").map(Number);
+        this.value = `${String(h).padStart(2, "0")}:00`;
+
+    });
+
+    // Disallow dates before today
+    const dateInput = document.getElementById("AppointmentDate");
+    const today = new Date().toISOString().split("T")[0];
+    dateInput.setAttribute("min", today);
+
     // Sample treatments
-    const products = {
+        const products = {
         nails: [
-            { name: "Basic Manicure", price: 200 },
-            { name: "Gel Manicure", price: 350 },
-            { name: "Pedicure", price: 250 }
+            { name: "Basic Manicure", price: 200, description: "Trim, shape, cuticle care and polish." },
+            { name: "Gel Manicure", price: 350, description: "Long-lasting gel polish with nail prep." },
+            { name: "Pedicure", price: 250, description: "Foot soak, exfoliation, nail care and polish." }
         ],
         massage: [
-            { name: "Swedish Massage", price: 500 },
-            { name: "Deep Tissue Massage", price: 650 }
+            { name: "Swedish Massage", price: 500, description: "Relaxing full-body massage for stress relief." },
+            { name: "Deep Tissue Massage", price: 650, description: "Targets deep muscle tension and knots." }
         ],
         facial: [
-            { name: "Basic Facial", price: 400 },
-            { name: "Luxury Facial", price: 700 }
+            { name: "Basic Facial", price: 400, description: "Cleanse, exfoliate and moisturize." },
+            { name: "Luxury Facial", price: 700, description: "Advanced hydration with targeted treatments." }
         ],
         lashes: [
-            { name: "Classic Lashes", price: 450 },
-            { name: "Volume Lashes", price: 700 }
+            { name: "Classic Lashes", price: 450, description: "Natural-looking lash extensions (1:1)." },
+            { name: "Volume Lashes", price: 700, description: "Full, dramatic fan lash extensions." }
         ],
         package: [
-            { name: "Basic", price: 250 },
-            { name: "Premium", price: 550 },
-             { name: "Luxury", price: 1200 }
+            { name: "Basic", price: 250, description: "Mix of essential treatments for a quick refresh." },
+            { name: "Premium", price: 550, description: "Upgrade with luxury add-ons and extended time." },
+            { name: "Luxury", price: 1200, description: "Full pampering including nails, massage & facial." }
         ]
     };
+
 
     // Store user selections
     const cart = {};
@@ -136,8 +159,9 @@
             col.className = "col-md-4 mb-3";
             col.innerHTML = `
                 <div class="card p-3">
-                    <h5>${p.name}</h5>
-                    <p>R${p.price}</p>
+                       <h5>${p.name}</h5>
+    <p class="text-muted" style="font-size: 0.9rem;">${p.description}</p>
+    <p><strong>R${p.price}</strong></p>
                     <div class="d-flex justify-content-between align-items-center">
                         <button class="btn btn-sm btn-danger" onclick="decrement('${tab}', ${idx})">-</button>
                         <span id="qty-${itemId}">${selected}</span>
@@ -228,5 +252,5 @@
 
 
     // Initialize tabs on page load
-    ["nails","massage","facial","lashes"].forEach(renderProducts);
+    ["nails","massage","facial","lashes","package"].forEach(renderProducts);
 </script>

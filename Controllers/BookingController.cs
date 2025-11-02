@@ -50,5 +50,13 @@ namespace XADAD7112_Application.Controllers
                 
         }
 
+        [HttpGet]
+        public IActionResult GetBookedSessions(DateTime date)
+        {
+            // Get all bookings for this date
+            var bookedTimes = repo.GetSessions(date);
+            return Json(bookedTimes);
+        }
+
     }
 }
