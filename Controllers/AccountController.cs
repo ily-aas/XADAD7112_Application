@@ -1,8 +1,10 @@
 ﻿using APDS_POE.Repositories;
 using APDS_POE.Services;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using System.Security.Claims;
 using XADAD7112_Application.Models;
 using XADAD7112_Application.Models.Account;
 using static XADAD7112_Application.Models.Account.Dtos;
@@ -44,46 +46,54 @@ namespace APDS_POE.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        public IActionResult Login(string username, string password, bool IsAdmin)
+        public async Task<IActionResult> Login(string username, string password, bool IsAdmin)
         {
 
-            UserRole Role = IsAdmin ? UserRole.Employee : UserRole.Farmer;
+            UserRole Role = IsAdmin ? UserRole.Admin : UserRole.User;
 
             if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
-                return BadRequest();
+            {
+                ViewBag.Error = "Invalid Credentials";
+                return View("Login");
+            }
 
             var user = Repo.Login(username, password, IsAdmin);
 
             if (user == null)
-                return BadRequest();
+            {
+                ViewBag.Error = "Invalid Credentials";
+                return View("Login");
+            }
 
             //Generate the token
             var token = _auth.GenerateToken(user, Role);
 
-            var cookieOptions = new CookieOptions
+            // Set up claims
+            var claims = new List<Claim>
             {
-                HttpOnly = true,
-                Secure = true, // set to true if you're using HTTPS
-                Expires = DateTimeOffset.UtcNow.AddHours(1),
-                SameSite = SameSiteMode.Strict // Optional: restrict cross-site sending
+                new Claim(ClaimTypes.Name, user.Username),
+                new Claim(ClaimTypes.Role, (IsAdmin ? "Admin" : "User")),
+                new Claim(ClaimTypes.Sid, user.Id.ToString())
             };
 
-            Response.Cookies.Append("jwt_token", token, cookieOptions);
+            // Create identity & principal
+            var identity = new ClaimsIdentity(claims, "MyCookieAuth");
+            var principal = new ClaimsPrincipal(identity);
 
-            if (!user.HasErrors && IsAdmin)
-                return RedirectToAction("Index", "Home");
+            // Sign in with cookie
+            await HttpContext.SignInAsync("MyCookieAuth", principal, new AuthenticationProperties
+            {
+                IsPersistent = true,
+                ExpiresUtc = DateTime.UtcNow.AddHours(1)
+            });
 
-            if (!user.HasErrors && !IsAdmin)
-                return RedirectToAction("Index", "Home");
-
-            ViewBag.Error = "Invalid username or password";
-            return View();
+            return RedirectToAction("Index", "Booking");
         }
 
-        [HttpPost]
+        [AllowAnonymous]
         public IActionResult Logout()
         {
-            Response.Cookies.Delete("jwt_token");
+            Response.Cookies.Delete(".AspNetCore.MyCookieAuth");
             return RedirectToAction("Index", "Home");
         }
 
@@ -96,18 +106,19 @@ namespace APDS_POE.Controllers
             if (!ModelState.IsValid)
             {
                 ViewBag.Error = "Invalid Form Submission";
-                return View();
+                return View("Create");
             }
 
             var response = Repo.AddUser(dto);
 
             if (response.IsSuccess)
             {
+                ViewBag.Success = response.Message;
                 return View("Login");
             }
 
             ViewBag.Error = response.Message;
-            return View();
+            return View("Create");
         }
 
 

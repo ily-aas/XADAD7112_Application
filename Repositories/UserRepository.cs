@@ -39,11 +39,11 @@ namespace APDS_POE.Repositories
             {
                 if (IsAdmin)
                 {
-                    user = DB.User.Where(x => x.Username == Username && x.Password == Password && (UserRole)x.UserRole == UserRole.Employee).FirstOrDefault();
+                    user = DB.User.Where(x => x.Username == Username && x.Password == Helper.PasswordService.Encrypt(Password) && (UserRole)x.UserRole == UserRole.Admin).FirstOrDefault();
                 }
                 else
                 {
-                    user = DB.User.Where(x => x.Username == Username && x.Password == Password && (UserRole)x.UserRole == UserRole.Farmer).FirstOrDefault();
+                    user = DB.User.Where(x => x.Username == Username && x.Password == Helper.PasswordService.Encrypt(Password) && (UserRole)x.UserRole == UserRole.User).FirstOrDefault();
                 }
 
                 if (user == null)
@@ -69,7 +69,7 @@ namespace APDS_POE.Repositories
 
         public List<User> GetAllUsers()
         {
-            return DB.User.Where(x => (UserRole)x.UserRole == UserRole.Farmer).ToList();
+            return DB.User.Where(x => (UserRole)x.UserRole == UserRole.User).ToList();
         }
 
         public AppResponse AddUser(User user)
@@ -85,13 +85,13 @@ namespace APDS_POE.Repositories
                 DB.SaveChanges();
 
                 response.IsSuccess = true;
-                response.Message = "Farmer added successfully";
+                response.Message = "Account created successfully";
                 return response;
             }
             catch (Exception ex)
             {
                 response.IsSuccess = true;
-                response.Message = $"An error occurred while attempting to add a farmer: {ex.Message}";
+                response.Message = $"An error occurred while attempting to create an account: {ex.Message}";
                 return response;
             }
         }

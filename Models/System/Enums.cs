@@ -7,11 +7,11 @@ namespace XADAD7112_Application.Models.System
     {
         public enum UserRole
         {
-            [Description("Farmer")]
-            Farmer = 0,
+            [Description("Admin")]
+            Admin = 0,
 
-            [Description("Employee")]
-            Employee = 1,
+            [Description("User")]
+            User = 1,
         }
     }  
 

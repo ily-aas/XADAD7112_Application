@@ -3,6 +3,24 @@
     ViewBag.HideNavbar = true;
 }
 
+
+
+<div id="globalAlert"
+     class="alert alert-danger text-center"
+     style="display:none;"
+     role="alert">
+    @* Render server-side if there is a message *@
+    @if (ViewBag.Error != null)
+    {
+        @Html.Raw(ViewBag.Error)
+    }
+    @if (ViewBag.Success != null)
+    {
+        @Html.Raw(ViewBag.Success)
+    }
+</div>
+
+
 <div class="container-fluid vh-100">
     <div class="row h-100">
         <!-- Left side: Image -->
@@ -15,10 +33,10 @@
             <div class="login-form w-75">
                 <h2 class="mb-4 text-center">Login to Your Account</h2>
 
-                <form method="post" asp-action="LoginAccount" asp-controller="Account">
+                <form method="post" asp-action="Login" asp-controller="Account">
                     <div class="mb-3">
-                        <label for="email" class="form-label">Email address</label>
-                        <input type="email" class="form-control" id="email" name="Email" placeholder="Enter email" required>
+                        <label for="username" class="form-label">Username</label>
+                        <input type="text" class="form-control" id="username" name="Username" placeholder="Username" required>
                     </div>
                     <div class="mb-3">
                         <label for="password" class="form-label">Password</label>

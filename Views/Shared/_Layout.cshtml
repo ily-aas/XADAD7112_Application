@@ -13,206 +13,263 @@
     <style>
 
         section {
-            min-height: 100vh; /* full screen height */
-            display: flex;
-            align-items: center; /* vertical center */
-            justify-content: center; /* horizontal center (for text) */
-            padding: 60px 20px; /* space for navbar */
-            scroll-snap-align: start; /* optional for snapping */
+        min-height: 100vh; /* full screen height */
+        display: flex;
+        align-items: center; /* vertical center */
+        justify-content: center; /* horizontal center (for text) */
+        padding: 60px 20px; /* space for navbar */
+        scroll-snap-align: start; /* optional for snapping */
         }
 
         html, body {
-            height: 100%;
-            margin: 0;
-            scroll-behavior: smooth;
+        height: 100%;
+        margin: 0;
+        scroll-behavior: smooth;
         }
 
         /* Landing section with full background image */
         .landing {
-            background: url('images/pexels-marcelo-moreira-988124-1926620.jpg') no-repeat center center / cover;
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            text-align: center;
-            position: relative;
+        background: url('images/pexels-marcelo-moreira-988124-1926620.jpg') no-repeat center center / cover;
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        text-align: center;
+        position: relative;
         }
 
 
         /* Transparent navbar */
         .navbar {
-            background-color: rgba(0, 0, 0, 0.5) !important;
+        background-color: rgba(0, 0, 0, 0.5) !important;
         }
 
-            .navbar .nav-link,
-            .navbar .navbar-brand {
-                color: #fff !important;
-            }
+        .navbar .nav-link,
+        .navbar .navbar-brand {
+        color: #fff !important;
+        }
 
-                /* Optional: add hover effect */
-                .navbar .nav-link:hover {
-                    color: #f8cdda !important;
-                }
+        /* Optional: add hover effect */
+        .navbar .nav-link:hover {
+        color: #f8cdda !important;
+        }
 
         /* Overlay effect for better contrast */
         .landing::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0,0,0,0.4);
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0,0,0,0.4);
         }
 
         .landing-content {
-            position: relative;
-            z-index: 1;
+        position: relative;
+        z-index: 1;
         }
 
         .navbar .nav-link {
-            position: relative;
-            color: #fff !important;
-            text-decoration: none;
-            padding: 8px 12px;
+        position: relative;
+        color: #fff !important;
+        text-decoration: none;
+        padding: 8px 12px;
         }
 
-            /* Animated underline */
-            .navbar .nav-link::after {
-                content: "";
-                position: absolute;
-                left: 0;
-                bottom: 0;
-                width: 0;
-                height: 2px;
-                background-color: #f8cdda; /* pick your highlight color */
-                transition: width 0.3s ease-in-out;
-            }
+        /* Animated underline */
+        .navbar .nav-link::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 0;
+        height: 2px;
+        background-color: #f8cdda; /* pick your highlight color */
+        transition: width 0.3s ease-in-out;
+        }
 
-            .navbar .nav-link:hover::after {
-                width: 100%;
-            }
+        .navbar .nav-link:hover::after {
+        width: 100%;
+        }
 
         .social-icons a {
-            color: #fff;
-            transition: color 0.3s ease;
+        color: #fff;
+        transition: color 0.3s ease;
         }
 
-            .social-icons a:hover {
-                color: #f8cdda; /* highlight color */
-            }
+        .social-icons a:hover {
+        color: #f8cdda; /* highlight color */
+        }
 
         .social-icons a {
-            color: #fff;
-            transition: color 0.3s ease, transform 0.3s ease; /* added transform transition */
-            display: inline-block;
+        color: #fff;
+        transition: color 0.3s ease, transform 0.3s ease; /* added transform transition */
+        display: inline-block;
         }
 
-            .social-icons a:hover {
-                color: #f8cdda; /* highlight color */
-                transform: scale(1.2); /* zoom effect */
-            }
+        .social-icons a:hover {
+        color: #f8cdda; /* highlight color */
+        transform: scale(1.2); /* zoom effect */
+        }
 
         #pricing {
-            background-image: url('/images/pexels-n-voitkevich-8468165.jpg');
-            background-repeat: no-repeat;
-            background-position: center center;
-            background-size: cover;
-            background-attachment: fixed; /* Sticky background effect */
+        background-image: url('/images/pexels-n-voitkevich-8468165.jpg');
+        background-repeat: no-repeat;
+        background-position: center center;
+        background-size: cover;
+        background-attachment: fixed; /* Sticky background effect */
 
-            color: #fff;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 60px 20px;
-            position: relative;
+        color: #fff;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 60px 20px;
+        position: relative;
         }
 
-            /* Optional overlay for better readability */
-            #pricing::before {
-                content: "";
-                position: absolute;
-                top: 0;
-                left: 0;
-                right: 0;
-                bottom: 0;
-                background: rgba(0, 0, 0, 0.5); /* semi-transparent black overlay */
-                z-index: 0;
-            }
+        /* Optional overlay for better readability */
+        #pricing::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.5); /* semi-transparent black overlay */
+        z-index: 0;
+        }
 
-            /* Ensure content appears above overlay */
-            #pricing .container-fluid {
-                position: relative;
-                z-index: 1;
-            }
+        /* Ensure content appears above overlay */
+        #pricing .container-fluid {
+        position: relative;
+        z-index: 1;
+        }
 
         /* Pricing cards styling (same as before) */
         .pricing-card {
-            background-color: rgba(255, 255, 255, 0.05); /* slightly transparent for contrast */
-            border: 2px solid #fff;
-            border-radius: 15px;
-            transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+        background-color: rgba(255, 255, 255, 0.05); /* slightly transparent for contrast */
+        border: 2px solid #fff;
+        border-radius: 15px;
+        transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
         }
 
-            .pricing-card:hover {
-                transform: translateY(-10px) scale(1.05);
-                background-color: rgba(255, 255, 255, 0.15);
-                box-shadow: 0 10px 30px rgba(255, 255, 255, 0.2);
-            }
+        .pricing-card:hover {
+        transform: translateY(-10px) scale(1.05);
+        background-color: rgba(255, 255, 255, 0.15);
+        box-shadow: 0 10px 30px rgba(255, 255, 255, 0.2);
+        }
 
-            .pricing-card h5,
-            .pricing-card h4,
-            .pricing-card p {
-                color: #fff;
-            }
+        .pricing-card h5,
+        .pricing-card h4,
+        .pricing-card p {
+        color: #fff;
+        }
 
-            .pricing-card .btn-outline-light {
-                border-color: #fff;
-                color: #fff;
-                transition: all 0.3s ease;
-            }
+        .pricing-card .btn-outline-light {
+        border-color: #fff;
+        color: #fff;
+        transition: all 0.3s ease;
+        }
 
-                .pricing-card .btn-outline-light:hover {
-                    background-color: #f8cdda;
-                    border-color: #f8cdda;
-                    color: #000;
-                }
+        .pricing-card .btn-outline-light:hover {
+        background-color: #f8cdda;
+        border-color: #f8cdda;
+        color: #000;
+        }
 
     </style>
 </head>
 <body>
     <header>
+
         @if (ViewBag.HideNavbar != true)
         {
-             <nav class="navbar navbar-expand-sm navbar-dark fixed-top">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-action="Index" asp-controller="Home"><strong>SK Beauty Salon</strong></a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse"
-                        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-end">
-                    <ul class="navbar-nav">
-                        <li class="nav-item"><a class="nav-link" href="#home">Home</a></li>
-						<li class="nav-item"><a class="nav-link" href="#about">About</a></li>
-						<li class="nav-item"><a class="nav-link" href="#pricing">Pricing</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>                  
-                        <li class="nav-item"><a class="nav-link" asp-action="Index" asp-controller="Booking">Book</a></li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-action="Login" asp-controller="Account">
-                                <i class="fa-solid fa-user" style="font-size: 1.0rem;"></i>
-                            </a>
-                        </li>
-                    </ul>
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+                <div class="container-fluid">
+
+                    <!-- Brand -->
+                    <a class="navbar-brand" asp-action="Index" asp-controller="Home">SK Beauty Salon</a>
+
+                    <!-- Toggler for mobile -->
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain"
+                    aria-controls="navbarMain" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+
+                    @if(!User.Identity.IsAuthenticated){
+                        <!-- Navbar links -->
+                        <div class="collapse navbar-collapse justify-content-end" id="navbarMain">
+                            <ul class="navbar-nav">
+                                <li class="nav-item"><a class="nav-link" href="#home">Home</a></li>
+                                <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+                                <li class="nav-item"><a class="nav-link" href="#pricing">Pricing</a></li>
+                                <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+                                <li class="nav-item"><a class="nav-link" asp-action="Index" asp-controller="Booking">Book</a></li>
+
+                                <li>
+                                    <a class="nav-link text-white" asp-action="Login" asp-controller="Account">
+                                        <i class="fa-solid fa-user"></i> Login
+                                    </a>
+                                </li>                      
+
+
+                            </ul>
+                        </div>
+                    }
+                    else
+                    {
+                        <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+                            <div class="container-fluid">
+                                <!-- Brand -->
+                                <span class="navbar-brand">SK Beauty Salon</span>
+
+                                <!-- Toggler for mobile -->
+                                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain"
+                                        aria-controls="navbarMain" aria-expanded="false" aria-label="Toggle navigation">
+                                    <span class="navbar-toggler-icon"></span>
+                                </button>
+
+                                <div class="collapse navbar-collapse justify-content-between" id="navbarMain">
+                                    <!-- Centered nav links -->
+                                    <ul class="navbar-nav mx-auto">
+                                        <li class="nav-item">
+                                            <a class="nav-link" asp-action="Index" asp-controller="Booking">Book</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link text-white" asp-action="Logout" asp-controller="Account">Logout</a>
+                                        </li>
+                                    </ul>
+
+                                    <!-- Right-aligned account/logout -->
+                                    <div class="d-flex align-items-center">
+                                        <span class="navbar-text text-white me-3">
+                                            @if (User.Identity.IsAuthenticated)
+                                            {
+                                                <text>Signed in as @User.Identity.Name</text>
+                                            }
+                                        </span>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </nav>
+
+
+                    }
+
                 </div>
-            </div>
-        </nav>
+            </nav>
         }
+
+
+
        
     </header>
+    <!-- GLOBAL ALERT: render the message here server-side so JS doesn't need string injection -->
     <div>
         <main role="main">
             @RenderBody()
@@ -224,9 +281,43 @@
             &copy; 2025 - XADAD7112_Application - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer> *@
+
+    <!-- SCRIPTS: load jQuery first, then bootstrap, then our animation script -->
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
-    @await RenderSectionAsync("Scripts", required: false)
+
+    <script>
+        (function () {
+            var alertBox = $("#globalAlert");
+
+            // if there is text content in the alert, show it
+            if (alertBox.length && alertBox.text().trim().length) {
+
+                // if success text present, make it green; else danger
+                var isSuccess = alertBox.text().toLowerCase().indexOf("success") !== -1
+                    || @((ViewBag.Success != null) ? "true" : "false");
+
+                if (isSuccess) {
+                    alertBox.removeClass("alert-danger").addClass("alert-success");
+                } else {
+                    alertBox.removeClass("alert-success").addClass("alert-danger");
+                }
+
+                alertBox.slideDown("fast");
+
+                setTimeout(function () {
+                    alertBox.slideUp("fast", function () {
+                        $(this).text("").hide();
+                    });
+                }, 4000); // change the duration here if needed
+            }
+        })();
+    </script>
+
+		@await RenderSectionAsync("Scripts", required: false)
+
+
+
 </body>
 </html>

@@ -2,6 +2,22 @@
     ViewData["Title"] = "Book Your Appointment";
 }
 
+<div id="globalAlert"
+     class="alert alert-danger text-center"
+     style="display:none;"
+     role="alert">
+    @* Render server-side if there is a message *@
+    @if (ViewBag.Error != null)
+    {
+        @Html.Raw(ViewBag.Error)
+    }
+    @if (ViewBag.Success != null)
+    {
+        @Html.Raw(ViewBag.Success)
+    }
+</div>
+
+
 <div class="booking-banner text-white d-flex flex-column justify-content-end align-items-center">
     <h2>BOOK AN APPOINTMENT</h2>
     <p>Build your own quote and secure your booking</p>

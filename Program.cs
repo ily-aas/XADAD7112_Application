@@ -18,6 +18,23 @@ builder.Services.AddSingleton<JwtAuthentication>();
 builder.Services.AddSession(); // Make sure session is enabled
 builder.Services.AddDistributedMemoryCache();
 
+// Add controllers with views
+builder.Services.AddControllersWithViews();
+
+// Add authentication with cookies
+builder.Services.AddAuthentication("MyCookieAuth") // scheme name
+    .AddCookie("MyCookieAuth", options =>
+    {
+        options.LoginPath = "/Account/Login"; // redirect when not authenticated
+        options.ExpireTimeSpan = TimeSpan.FromHours(1);
+        options.Cookie.HttpOnly = true;
+        options.Cookie.SameSite = SameSiteMode.Strict;
+    });
+
+// Add authorization
+builder.Services.AddAuthorization();
+
+
 //Repos
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 

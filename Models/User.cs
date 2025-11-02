@@ -28,7 +28,7 @@ namespace XADAD7112_Application.Models
         public string? Address { get; set; }
 
         [Required]
-        public int UserRole { get; set; } = 0;
+        public int UserRole { get; set; } = 1;
 
         public DateTime? DateCreated { get; set; }
 

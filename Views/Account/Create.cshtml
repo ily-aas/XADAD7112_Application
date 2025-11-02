@@ -4,12 +4,21 @@
 
 }
 
-@if (ViewBag.Error != null)
-{
-    <div class="alert alert-danger">
-        @ViewBag.Error
-    </div>
-}
+<div id="globalAlert"
+     class="alert alert-danger text-center"
+     style="display:none;"
+     role="alert">
+    @* Render server-side if there is a message *@
+    @if (ViewBag.Error != null)
+    {
+        @Html.Raw(ViewBag.Error)
+    }
+    @if (ViewBag.Success != null)
+    {
+        @Html.Raw(ViewBag.Success)
+    }
+</div>
+
 
 <div class="container-fluid vh-100">
     <div class="row h-100">
@@ -37,20 +46,12 @@
                         <input type="number" class="form-control" id="mobile" name="MobileNo" placeholder="Mobile Number..." required>
                     </div>
                     <div class="mb-3">
-                        <label for="address" class="form-label">Address</label>
-                        <input type="text" class="form-control" id="address" name="Address" placeholder="Address..." required>
-                    </div>
-                    <div class="mb-3">
                         <label for="username" class="form-label">Username</label>
                         <input type="text" class="form-control" id="username" name="Username" placeholder="Username..." required>
                     </div>
                     <div class="mb-3">
                         <label for="password" class="form-label">Password</label>
                         <input type="password" class="form-control" id="password" name="Password" placeholder="Password..." required>
-                    </div>
-                    <div class="mb-3 form-check">
-                        <input type="checkbox" class="form-check-input" id="rememberMe" name="RememberMe">
-                        <label class="form-check-label" for="rememberMe">Remember me</label>
                     </div>
                     <button type="submit" class="btn btn-primary w-100">Create</button>
                     <p class="mt-3 text-center">
